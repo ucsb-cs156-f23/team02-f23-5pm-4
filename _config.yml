@@ -23,4 +23,4 @@ repo_name: "TBD"
 repo: ucsb-cs156-f23/team02-f23-5pm-4
 owner: ucsb-cs156-f23
 repo_name: team02-f23-5pm-4
-pull_requests: []
+pull_requests: [{"author":{"id":"MDQ6VXNlcjU5MjUwODA=","is_bot":false,"login":"ajs808","name":"Arul Saxena"},"headRefName":"Arul-DiningMenuTable","number":43,"title":"Create database table for UCSBDiningCommonsMenuItem","url":"https://github.com/ucsb-cs156-f23/team02-f23-5pm-4/pull/43"}]
