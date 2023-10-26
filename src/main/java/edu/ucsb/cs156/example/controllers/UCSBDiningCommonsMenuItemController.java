@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 @Tag(name = "UCSBDiningCommonsMenuItems")
-@RequestMapping("/api/UCSBDiningCommonsMenuItem")
+@RequestMapping("/api/ucsbdiningcommonsmenuitems")
 @RestController
 @Slf4j
 public class UCSBDiningCommonsMenuItemController {

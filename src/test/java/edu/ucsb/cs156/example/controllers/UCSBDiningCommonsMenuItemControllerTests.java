@@ -47,14 +47,14 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
         @Test
         public void logged_out_users_cannot_get_all() throws Exception {
-                mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems/all"))
                                 .andExpect(status().is(403)); // logged out users can't get all
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_users_can_get_all() throws Exception {
-                mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
+                mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems/all"))
                                 .andExpect(status().is(200)); // logged
         }
 
@@ -80,7 +80,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
                 when(ucsbDiningCommonsMenuItemRepository.findAll()).thenReturn(expectedItems);
 
                 // act
-                MvcResult response = mockMvc.perform(get("/api/UCSBDiningCommonsMenuItem/all"))
+                MvcResult response = mockMvc.perform(get("/api/ucsbdiningcommonsmenuitems/all"))
                                 .andExpect(status().isOk()).andReturn();
 
                 // assert
@@ -94,14 +94,14 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
         // Tests for POST /api/UCSBDiningCommonsMenuItem/post...
         @Test
         public void logged_out_users_cannot_post() throws Exception {
-                mockMvc.perform(post("/api/UCSBDiningCommonsMenuItem/post"))
+                mockMvc.perform(post("/api/ucsbdiningcommonsmenuitems/post"))
                                 .andExpect(status().is(403));
         }
 
         @WithMockUser(roles = { "USER" })
         @Test
         public void logged_in_regular_users_cannot_post() throws Exception {
-                mockMvc.perform(post("/api/UCSBDiningCommonsMenuItem/post"))
+                mockMvc.perform(post("/api/ucsbdiningcommonsmenuitems/post"))
                                 .andExpect(status().is(403)); // only admins can post
         }
 
@@ -120,7 +120,7 @@ public class UCSBDiningCommonsMenuItemControllerTests extends ControllerTestCase
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/UCSBDiningCommonsMenuItem/post?diningCommonsCode=DLG&station=Pizza&name=Cheese Pizza")
+                                post("/api/ucsbdiningcommonsmenuitems/post?diningCommonsCode=DLG&station=Pizza&name=Cheese Pizza")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
