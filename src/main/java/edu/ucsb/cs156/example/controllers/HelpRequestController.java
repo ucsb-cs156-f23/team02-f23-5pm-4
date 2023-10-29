@@ -47,7 +47,7 @@ public class HelpRequestController extends ApiController {
         @Parameter(name="requesterEmail") @RequestParam String requesterEmail,
         @Parameter(name="teamId") @RequestParam String teamId,
         @Parameter(name="tableOrBreakoutRoom") @RequestParam String tableOrBreakoutRoom,
-        @Parameter(name="requestTime", description="in iso format, e.g. YYYY-mm-ddTHH:MM:SS; see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("requestTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime requestTime,
+        @Parameter(name="requestTime", description="in iso format, e.g. YYYY-mm-ddTHH:MM:SS, 2023-10-29T20:05:35Z; see https://en.wikipedia.org/wiki/ISO_8601") @RequestParam("requestTime") @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime requestTime,
         @Parameter(name="explanation") @RequestParam String explanation,
         @Parameter(name="solved") @RequestParam boolean solved)
         throws JsonProcessingException {
@@ -64,4 +64,16 @@ public class HelpRequestController extends ApiController {
         return savedHelpRequest;
 
 }
+
+@Operation(summary= "Get a single help request")
+@PreAuthorize("hasRole('ROLE_USER')")
+@GetMapping("")
+public HelpRequest getById(@Parameter(name="id") @RequestParam Long id){
+        HelpRequest helpRequest = helpRequestRepository.findById(id)
+        .orElseThrow(() -> new EntityNotFoundException(HelpRequest.class, id));
+        return helpRequest;
+    }
+
+
 }
+
