@@ -35,13 +35,15 @@ import java.time.LocalDateTime;
 public class HelpRequestController extends ApiController {
     @Autowired
     HelpRequestRepository helpRequestRepository;
+   
+    @Operation(summary= "List all help requests")
     @GetMapping("/all")
     @PreAuthorize("hasRole('ROLE_USER')")
     public Iterable<HelpRequest> allHelpRequests() {
         Iterable<HelpRequest> helpRequests = helpRequestRepository.findAll();
         return helpRequests;
     }
-
+    @Operation(summary= "Create a new help request")
     @PostMapping("/post")
     public HelpRequest postHelpRequest(
         @Parameter(name="requesterEmail") @RequestParam String requesterEmail,
@@ -76,7 +78,6 @@ public HelpRequest getById(@Parameter(name="id") @RequestParam Long id){
 
 
     @Operation(summary= "Delete a Help Request")
-    @PreAuthorize("hasRole('ROLE_ADMIN')")
     @DeleteMapping("")
     public Object deleteHelpRequest(
         @Parameter(name="id") @RequestParam Long id) {
