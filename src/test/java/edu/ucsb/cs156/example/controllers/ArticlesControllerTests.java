@@ -223,7 +223,7 @@ public class ArticlesControllerTests extends ControllerTestCase {
                         .title("how to make good tests")
                         .url("url.com/testers")
                         .explanation("testing is very good")
-                        .email("katytsao@ucsb.edu")
+                        .email("notkatytsao@ucsb.edu")
                         .dateAdded(ldt2)
                         .build();
 
