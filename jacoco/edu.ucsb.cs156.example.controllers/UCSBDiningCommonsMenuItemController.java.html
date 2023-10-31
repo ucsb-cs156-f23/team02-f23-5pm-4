@@ -10,6 +10,8 @@ import lombok.extern.slf4j.Slf4j;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -25,8 +27,8 @@ import org.springframework.web.bind.annotation.RestController;
 @Tag(name = &quot;UCSBDiningCommonsMenuItems&quot;)
 @RequestMapping(&quot;/api/ucsbdiningcommonsmenuitems&quot;)
 @RestController
-<span class="fc" id="L28">@Slf4j</span>
-<span class="fc" id="L29">public class UCSBDiningCommonsMenuItemController extends ApiController{</span>
+<span class="fc" id="L30">@Slf4j</span>
+<span class="fc" id="L31">public class UCSBDiningCommonsMenuItemController extends ApiController{</span>
     @Autowired
     UCSBDiningCommonsMenuItemRepository ucsbDiningCommonsMenuItemRepository;
 
@@ -34,8 +36,8 @@ import org.springframework.web.bind.annotation.RestController;
     @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
     @GetMapping(&quot;/all&quot;)
     public Iterable&lt;UCSBDiningCommonsMenuItem&gt; allUCSBDiningCommonMenuItems() {
-<span class="fc" id="L37">        Iterable&lt;UCSBDiningCommonsMenuItem&gt; items = ucsbDiningCommonsMenuItemRepository.findAll();</span>
-<span class="fc" id="L38">        return items;</span>
+<span class="fc" id="L39">        Iterable&lt;UCSBDiningCommonsMenuItem&gt; items = ucsbDiningCommonsMenuItemRepository.findAll();</span>
+<span class="fc" id="L40">        return items;</span>
     }
 
     @Operation(summary= &quot;Create a new ucsb dining common menu item&quot;)
@@ -47,14 +49,14 @@ import org.springframework.web.bind.annotation.RestController;
             @Parameter(name=&quot;name&quot;) @RequestParam String name)
             throws JsonProcessingException {
 
-<span class="fc" id="L50">        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = new UCSBDiningCommonsMenuItem();</span>
-<span class="fc" id="L51">        ucsbDiningCommonsMenuItem.setDiningCommonsCode(diningCommonsCode);</span>
-<span class="fc" id="L52">        ucsbDiningCommonsMenuItem.setStation(station);</span>
-<span class="fc" id="L53">        ucsbDiningCommonsMenuItem.setName(name);</span>
+<span class="fc" id="L52">        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = new UCSBDiningCommonsMenuItem();</span>
+<span class="fc" id="L53">        ucsbDiningCommonsMenuItem.setDiningCommonsCode(diningCommonsCode);</span>
+<span class="fc" id="L54">        ucsbDiningCommonsMenuItem.setStation(station);</span>
+<span class="fc" id="L55">        ucsbDiningCommonsMenuItem.setName(name);</span>
 
-<span class="fc" id="L55">        UCSBDiningCommonsMenuItem savedUcsbDiningCommonsMenuItem = ucsbDiningCommonsMenuItemRepository.save(ucsbDiningCommonsMenuItem);</span>
+<span class="fc" id="L57">        UCSBDiningCommonsMenuItem savedUcsbDiningCommonsMenuItem = ucsbDiningCommonsMenuItemRepository.save(ucsbDiningCommonsMenuItem);</span>
 
-<span class="fc" id="L57">        return savedUcsbDiningCommonsMenuItem;</span>
+<span class="fc" id="L59">        return savedUcsbDiningCommonsMenuItem;</span>
     }
 
     @Operation(summary= &quot;Get a single dining common menu item&quot;)
@@ -62,10 +64,41 @@ import org.springframework.web.bind.annotation.RestController;
     @GetMapping(&quot;&quot;)
     public UCSBDiningCommonsMenuItem getById(
             @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
-<span class="fc" id="L65">        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = ucsbDiningCommonsMenuItemRepository.findById(id)</span>
-<span class="fc" id="L66">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItem.class, id));</span>
+<span class="fc" id="L67">        UCSBDiningCommonsMenuItem ucsbDiningCommonsMenuItem = ucsbDiningCommonsMenuItemRepository.findById(id)</span>
+<span class="fc" id="L68">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItem.class, id));</span>
 
-<span class="fc" id="L68">        return ucsbDiningCommonsMenuItem;</span>
+<span class="fc" id="L70">        return ucsbDiningCommonsMenuItem;</span>
+    }
+
+    @Operation(summary= &quot;Delete a UCSBDiningCommonsMenuItem&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteUCSBDiningCommonsMenuItem(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id) {
+<span class="fc" id="L78">        UCSBDiningCommonsMenuItem menuItem = ucsbDiningCommonsMenuItemRepository.findById(id)</span>
+<span class="fc" id="L79">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItem.class, id));</span>
+
+<span class="fc" id="L81">        ucsbDiningCommonsMenuItemRepository.delete(menuItem);</span>
+<span class="fc" id="L82">        return genericMessage(&quot;UCSBDiningCommonsMenuItem with id %s deleted&quot;.formatted(id));</span>
+    }
+
+    @Operation(summary= &quot;Update a single UCSBDiningCommonsMenuItem&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @PutMapping(&quot;&quot;)
+    public UCSBDiningCommonsMenuItem updateUCSBDiningCommonsMenuItem(
+            @Parameter(name=&quot;id&quot;) @RequestParam Long id,
+            @RequestBody @Valid UCSBDiningCommonsMenuItem incoming) {
+
+<span class="fc" id="L92">        UCSBDiningCommonsMenuItem menuItem = ucsbDiningCommonsMenuItemRepository.findById(id)</span>
+<span class="fc" id="L93">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBDiningCommonsMenuItem.class, id));</span>
+
+<span class="fc" id="L95">        menuItem.setDiningCommonsCode(incoming.getDiningCommonsCode());</span>
+<span class="fc" id="L96">        menuItem.setName(incoming.getName());</span>
+<span class="fc" id="L97">        menuItem.setStation(incoming.getStation());</span>
+
+<span class="fc" id="L99">        ucsbDiningCommonsMenuItemRepository.save(menuItem);</span>
+
+<span class="fc" id="L101">        return menuItem;</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
