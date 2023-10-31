@@ -32,7 +32,7 @@ import java.time.LocalDateTime;
 @RestController
 @Slf4j
 
-public class RecommendationRequestController {
+public class RecommendationRequestController extends ApiController{
 
     @Autowired
     RecommendationRequestRepository recommendationRequestRepository;
@@ -40,7 +40,7 @@ public class RecommendationRequestController {
     @Operation(summary= "List all recommendation requests")
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/all")
-    public Iterable<RecommendationRequest> allRecomendationRequest() {
+    public Iterable<RecommendationRequest> allRecomendationRequests() {
         Iterable<RecommendationRequest> requests = recommendationRequestRepository.findAll();
         return requests;
     }

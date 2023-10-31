@@ -65,11 +65,11 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
 
                 // arrange
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-                LocalDateTime ldt2 = LocalDateTime.parse("2022-01-03T00:00:00");
+                LocalDateTime ldt2 = LocalDateTime.parse("2022-02-03T00:00:00");
 
                 RecommendationRequest request1 = RecommendationRequest.builder()
-                                .requesterEmail("requester@gmail.com")
-                                .professorEmail("professor@gmail.com")
+                                .requesterEmail("person1@gmail.com")
+                                .professorEmail("person2@gmail.com")
                                 .explanation("grad school")
                                 .dateRequested(ldt1)
                                 .dateNeeded(ldt2)
@@ -77,7 +77,7 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
                                 .build();
 
                 LocalDateTime ldt3 = LocalDateTime.parse("2022-03-11T00:00:00");
-                LocalDateTime ldt4 = LocalDateTime.parse("2022-03-11T00:00:00");
+                LocalDateTime ldt4 = LocalDateTime.parse("2022-04-11T00:00:00");
 
                 RecommendationRequest request2 = RecommendationRequest.builder()
                                 .requesterEmail("requester2@gmail.com")
@@ -126,7 +126,7 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
                 // arrange
 
                 LocalDateTime ldt1 = LocalDateTime.parse("2022-01-03T00:00:00");
-                LocalDateTime ldt2 = LocalDateTime.parse("2022-01-03T00:00:00");
+                LocalDateTime ldt2 = LocalDateTime.parse("2022-02-03T00:00:00");
 
                 RecommendationRequest request1 = RecommendationRequest.builder()
                                 .requesterEmail("requester@gmail.com")
@@ -134,14 +134,14 @@ public class RecommendationRequestControllerTests extends ControllerTestCase {
                                 .explanation("grad school")
                                 .dateRequested(ldt1)
                                 .dateNeeded(ldt2)
-                                .done(false)
+                                .done(true)
                                 .build();
 
                 when(recommendationRequestRepository.save(eq(request1))).thenReturn(request1);
 
                 // act
                 MvcResult response = mockMvc.perform(
-                                post("/api/recommendationrequest/post?requesterEmail=requester@gmail.com&professorEmail=professor@gmail.com&explanation=grad school&dateRequested=2022-01-03T00:00:00&dateNeeded=2022-01-03T00:00:00&done=false")
+                                post("/api/recommendationrequest/post?requesterEmail=requester@gmail.com&professorEmail=professor@gmail.com&explanation=grad school&dateRequested=2022-01-03T00:00:00&dateNeeded=2022-02-03T00:00:00&done=true")
                                                 .with(csrf()))
                                 .andExpect(status().isOk()).andReturn();
 
