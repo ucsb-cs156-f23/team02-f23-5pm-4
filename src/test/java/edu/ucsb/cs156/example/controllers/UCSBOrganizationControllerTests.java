@@ -33,7 +33,6 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(controllers = UCSBOrganizationController.class)
 @Import(TestConfig.class)
 public class UCSBOrganizationControllerTests extends ControllerTestCase {
-
     @MockBean 
     UCSBOrganizationRepository ucsbOrganizationRepository;
 
