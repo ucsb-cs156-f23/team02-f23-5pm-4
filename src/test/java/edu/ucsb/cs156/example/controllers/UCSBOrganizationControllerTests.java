@@ -67,7 +67,6 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .orgTranslation("ZETA PHI RHO")
                             .inactive(true)
                             .build();
-
             UCSBOrganization sky = UCSBOrganization.builder()
                             .orgCode("SKY")
                             .orgTranslationShort("SKYDIVING CLUB")
