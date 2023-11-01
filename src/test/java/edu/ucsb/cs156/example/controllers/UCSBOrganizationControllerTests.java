@@ -33,6 +33,7 @@ import static org.mockito.Mockito.when;
 @WebMvcTest(controllers = UCSBOrganizationController.class)
 @Import(TestConfig.class)
 public class UCSBOrganizationControllerTests extends ControllerTestCase {
+
     @MockBean 
     UCSBOrganizationRepository ucsbOrganizationRepository;
 
@@ -53,10 +54,30 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
             mockMvc.perform(get("/api/ucsborganization/all"))
                             .andExpect(status().is(200)); // logged
     }
-    
-        @WithMockUser(roles = { "USER" })
+
+    @WithMockUser(roles = { "USER" })
         @Test
-        public void logged_in_user_can_get_all_ucsborganization() throws Exception {
+        public void test_that_logged_in_user_can_get_by_id_when_the_id_does_not_exist() throws Exception {
+
+            // arrange
+
+            when(ucsbOrganizationRepository.findById(eq("zpr"))).thenReturn(Optional.empty());
+
+            // act
+            MvcResult response = mockMvc.perform(get("/api/ucsborganization?orgCode=zpr"))
+                            .andExpect(status().isNotFound()).andReturn();
+
+            // assert
+
+            verify(ucsbOrganizationRepository, times(1)).findById(eq("zpr"));
+            Map<String, Object> json = responseToJson(response);
+            assertEquals("EntityNotFoundException", json.get("type"));
+            assertEquals("UCSBOrganization with id zpr not found", json.get("message"));
+        }
+    
+    @WithMockUser(roles = { "USER" })
+    @Test
+    public void logged_in_user_can_get_all_ucsborganization() throws Exception {
 
             // arrange
 
@@ -66,6 +87,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .orgTranslation("ZETA PHI RHO")
                             .inactive(true)
                             .build();
+
             UCSBOrganization sky = UCSBOrganization.builder()
                             .orgCode("SKY")
                             .orgTranslationShort("SKYDIVING CLUB")
@@ -88,7 +110,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
             String expectedJson = mapper.writeValueAsString(expectedOrg);
             String responseString = response.getResponse().getContentAsString();
             assertEquals(expectedJson, responseString);
-        }
+    }
 
        // Tests for POST /api/ucsborganization...
 
@@ -129,6 +151,41 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                 String expectedJson = mapper.writeValueAsString(osli);
                 String responseString = response.getResponse().getContentAsString();
                 assertEquals(expectedJson, responseString);
+        }
+
+        // Tests for GET /api/ucsborganization?...
+
+     @Test
+     public void logged_out_users_cannot_get_by_id() throws Exception {
+             mockMvc.perform(get("/api/ucsborganization?orgCode=zpr"))
+                             .andExpect(status().is(403)); // logged out users can't get by id
+     }
+
+     @WithMockUser(roles = { "USER" })
+     @Test
+     public void test_that_logged_in_user_can_get_by_id_when_the_id_exists() throws Exception {
+
+             // arrange
+
+             UCSBOrganization zpr = UCSBOrganization.builder()
+                         .orgCode("ZPR")
+                         .orgTranslationShort("ZETA PHI RHO")
+                         .orgTranslation("ZETA PHI RHO")
+                         .inactive(true)
+                         .build();
+
+             when(ucsbOrganizationRepository.findById(eq("zpr"))).thenReturn(Optional.of(zpr));
+
+             // act
+             MvcResult response = mockMvc.perform(get("/api/ucsborganization?orgCode=zpr"))
+                             .andExpect(status().isOk()).andReturn();
+
+             // assert
+
+             verify(ucsbOrganizationRepository, times(1)).findById(eq("zpr"));
+             String expectedJson = mapper.writeValueAsString(zpr);
+             String responseString = response.getResponse().getContentAsString();
+             assertEquals(expectedJson, responseString);
         }
     
 }
