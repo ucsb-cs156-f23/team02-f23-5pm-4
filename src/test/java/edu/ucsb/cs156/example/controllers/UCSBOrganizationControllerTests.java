@@ -65,14 +65,14 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .orgCode("ZPR")
                             .orgTranslationShort("ZETA PHI RHO")
                             .orgTranslation("ZETA PHI RHO")
-                            .inactive(false)
+                            .inactive(true)
                             .build();
 
             UCSBOrganization sky = UCSBOrganization.builder()
                             .orgCode("SKY")
                             .orgTranslationShort("SKYDIVING CLUB")
                             .orgTranslation("SKYDIVING CLUB AT UCSB")
-                            .inactive(false)
+                            .inactive(true)
                             .build();
 
             ArrayList<UCSBOrganization> expectedOrg = new ArrayList<>();
@@ -116,7 +116,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                             .orgCode("OSLI")
                             .orgTranslationShort("STUDENT LIFE")
                             .orgTranslation("OFFICE OF STUDENT LIFE")
-                            .inactive(false)
+                            .inactive(true)
                             .build();
 
                 when(ucsbOrganizationRepository.save(eq(osli))).thenReturn(osli);
