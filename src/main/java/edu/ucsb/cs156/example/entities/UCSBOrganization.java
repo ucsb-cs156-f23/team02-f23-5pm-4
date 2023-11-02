@@ -17,6 +17,6 @@ public class UCSBOrganization {
   @Id
   private String orgCode;
   private String orgTranslationShort;
-  private String orgTranslatio;
+  private String orgTranslation;
   private boolean inactive;
 }
