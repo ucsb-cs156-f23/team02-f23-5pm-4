@@ -64,6 +64,7 @@ public class UCSBOrganizationController extends ApiController {
       return savedOrganizations;
   }
 
+
         @Operation(summary= "Get a single organization")
         @PreAuthorize("hasRole('ROLE_USER')")
         @GetMapping("")
@@ -74,7 +75,7 @@ public class UCSBOrganizationController extends ApiController {
       
             return org;
         }
-
+  
         @Operation(summary= "Update a single organization")
         @PreAuthorize("hasRole('ROLE_ADMIN')")
         @PutMapping("")
@@ -108,5 +109,5 @@ public class UCSBOrganizationController extends ApiController {
         return genericMessage("UCSBOrganization with id %s deleted".formatted(orgCode));
     }
 
-
 }
+
