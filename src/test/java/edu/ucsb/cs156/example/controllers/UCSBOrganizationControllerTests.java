@@ -312,6 +312,5 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                 Map<String, Object> json = responseToJson(response);
                 assertEquals("UCSBOrganization with id not-exist not found", json.get("message"));
         }
-
     
 }
