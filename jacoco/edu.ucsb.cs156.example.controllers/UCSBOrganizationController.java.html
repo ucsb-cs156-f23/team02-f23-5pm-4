@@ -97,6 +97,17 @@ import javax.validation.Valid;
 <span class="fc" id="L97">        return org;</span>
         }
 
+    @Operation(summary= &quot;Delete a UCSBOrganization&quot;)
+    @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
+    @DeleteMapping(&quot;&quot;)
+    public Object deleteOrg(
+            @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode) {
+<span class="fc" id="L105">        UCSBOrganization org = ucsbOrganizationRepository.findById(orgCode)</span>
+<span class="fc" id="L106">                .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganization.class, orgCode));</span>
+
+<span class="fc" id="L108">        ucsbOrganizationRepository.delete(org);</span>
+<span class="fc" id="L109">        return genericMessage(&quot;UCSBOrganization with id %s deleted&quot;.formatted(orgCode));</span>
+    }
 
 }
 
