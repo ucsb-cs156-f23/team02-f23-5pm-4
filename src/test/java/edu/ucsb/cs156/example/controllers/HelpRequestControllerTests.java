@@ -266,7 +266,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
                             .requesterEmail("joeGaucho@ucsb.edu")
                             .teamId("team2Id")
                             .tableOrBreakoutRoom("breakoutRoom")
-                            .requestTime(LocalDateTime.parse("2021-10-01T00:00:00"))
+                            .requestTime(LocalDateTime.parse("2021-10-01T00:00:10"))
                             .explanation("explanation2")
                             .solved(true)
                             .build();
@@ -302,7 +302,7 @@ public class HelpRequestControllerTests extends ControllerTestCase {
             .requesterEmail("joeGaucho@ucsb.edu")
             .teamId("team2Id")
             .tableOrBreakoutRoom("breakoutRoom")
-            .requestTime(LocalDateTime.parse("2021-10-01T00:00:00"))
+            .requestTime(LocalDateTime.parse("2021-10-01T00:00:20"))
             .explanation("explanation2")
             .solved(true)
             .build();
