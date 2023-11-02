@@ -89,28 +89,29 @@ public HelpRequest getById(@Parameter(name=&quot;id&quot;) @RequestParam Long id
 <span class="fc" id="L89">        helpRequestRepository.delete(helpRequest);</span>
 <span class="fc" id="L90">        return genericMessage(&quot;HelpRequest with id %s deleted&quot;.formatted(id));</span>
         }
-/*
+
 
         @Operation(summary= &quot;Update a Help Request&quot;)
+        @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
         @PutMapping(&quot;&quot;)
         public HelpRequest updateHelpRequest(
             @Parameter(name=&quot;id&quot;) @RequestParam Long id,
             @RequestBody @Valid HelpRequest incoming) {
-        HelpRequest helpRequest = helpRequestRepository.findById(id)
-        .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));
+<span class="fc" id="L100">        HelpRequest helpRequest = helpRequestRepository.findById(id)</span>
+<span class="fc" id="L101">        .orElseThrow(() -&gt; new EntityNotFoundException(HelpRequest.class, id));</span>
         
-        helpRequest.setRequesterEmail(incoming.getRequesterEmail());
-        helpRequest.setTeamId(incoming.getTeamId());
-        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());
-        helpRequest.setRequestTime(incoming.getRequestTime());
-        helpRequest.setExplanation(incoming.getExplanation());
-        helpRequest.setSolved(incoming.getSolved());
+<span class="fc" id="L103">        helpRequest.setRequesterEmail(incoming.getRequesterEmail());</span>
+<span class="fc" id="L104">        helpRequest.setTeamId(incoming.getTeamId());</span>
+<span class="fc" id="L105">        helpRequest.setTableOrBreakoutRoom(incoming.getTableOrBreakoutRoom());</span>
+<span class="fc" id="L106">        helpRequest.setRequestTime(incoming.getRequestTime());</span>
+<span class="fc" id="L107">        helpRequest.setExplanation(incoming.getExplanation());</span>
+<span class="fc" id="L108">        helpRequest.setSolved(incoming.getSolved());</span>
         
-        helpRequestRepository.save(helpRequest);
+<span class="fc" id="L110">        helpRequestRepository.save(helpRequest);</span>
         
-        return helpRequest;
+<span class="fc" id="L112">        return helpRequest;</span>
     }
- */
+ 
 }
 
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
