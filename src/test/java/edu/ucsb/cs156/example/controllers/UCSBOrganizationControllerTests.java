@@ -189,6 +189,7 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
              assertEquals(expectedJson, responseString);
         }
 
+
          // Tests for PUT /api/ucsborganization?...
 
         @WithMockUser(roles = { "ADMIN", "USER" })
@@ -262,5 +263,6 @@ public class UCSBOrganizationControllerTests extends ControllerTestCase {
                 assertEquals("UCSBOrganization with id null not found", json.get("message"));
 
         }
+
     
 }
