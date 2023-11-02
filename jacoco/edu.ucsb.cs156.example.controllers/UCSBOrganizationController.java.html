@@ -41,6 +41,7 @@ import javax.validation.Valid;
 <span class="fc" id="L41">      return orgs;</span>
   }
 
+
   @Operation(summary= &quot;Create a new organization&quot;)
   @PreAuthorize(&quot;hasRole('ROLE_ADMIN')&quot;)
   @PostMapping(&quot;/post&quot;)
@@ -52,16 +53,29 @@ import javax.validation.Valid;
       )
       {
 
-<span class="fc" id="L55">      UCSBOrganization organizations = new UCSBOrganization();</span>
-<span class="fc" id="L56">      organizations.setOrgCode(orgCode);</span>
-<span class="fc" id="L57">      organizations.setOrgTranslationShort(orgTranslationShort);</span>
-<span class="fc" id="L58">      organizations.setOrgTranslation(orgTranslation);</span>
-<span class="fc" id="L59">      organizations.setInactive(inactive);</span>
+<span class="fc" id="L56">      UCSBOrganization organizations = new UCSBOrganization();</span>
+<span class="fc" id="L57">      organizations.setOrgCode(orgCode);</span>
+<span class="fc" id="L58">      organizations.setOrgTranslationShort(orgTranslationShort);</span>
+<span class="fc" id="L59">      organizations.setOrgTranslation(orgTranslation);</span>
+<span class="fc" id="L60">      organizations.setInactive(inactive);</span>
 
-<span class="fc" id="L61">      UCSBOrganization savedOrganizations = ucsbOrganizationRepository.save(organizations);</span>
+<span class="fc" id="L62">      UCSBOrganization savedOrganizations = ucsbOrganizationRepository.save(organizations);</span>
 
-<span class="fc" id="L63">      return savedOrganizations;</span>
+<span class="fc" id="L64">      return savedOrganizations;</span>
   }
 
+  @Operation(summary= &quot;Get a single organization&quot;)
+        @PreAuthorize(&quot;hasRole('ROLE_USER')&quot;)
+        @GetMapping(&quot;&quot;)
+        public UCSBOrganization getById(
+                @Parameter(name=&quot;orgCode&quot;) @RequestParam String orgCode) {
+<span class="fc" id="L72">            UCSBOrganization org = ucsbOrganizationRepository.findById(orgCode)</span>
+<span class="fc" id="L73">                    .orElseThrow(() -&gt; new EntityNotFoundException(UCSBOrganization.class, orgCode));</span>
+      
+<span class="fc" id="L75">            return org;</span>
+        }
+
+
 }
+
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.7.202105040129</span></div></body></html>
