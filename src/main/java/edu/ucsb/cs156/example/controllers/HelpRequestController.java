@@ -89,9 +89,10 @@ public HelpRequest getById(@Parameter(name="id") @RequestParam Long id){
         helpRequestRepository.delete(helpRequest);
         return genericMessage("HelpRequest with id %s deleted".formatted(id));
         }
-/*
+
 
         @Operation(summary= "Update a Help Request")
+        @PreAuthorize("hasRole('ROLE_ADMIN')")
         @PutMapping("")
         public HelpRequest updateHelpRequest(
             @Parameter(name="id") @RequestParam Long id,
@@ -110,6 +111,6 @@ public HelpRequest getById(@Parameter(name="id") @RequestParam Long id){
         
         return helpRequest;
     }
- */
+ 
 }
 
