@@ -17,7 +17,7 @@ TODO: Add a link to the deployed Dokku app for your team here, e.g.
 Deployments:
 
 * Prod: <https://team02.dokku-04.cs.ucsb.edu/>
-* QA: TODO
+* QA: <https://team02-qa.dokku-04.cs.ucsb.edu/>
 
 # Setup before running application
 
